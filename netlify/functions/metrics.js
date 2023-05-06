@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 exports.handler = async (event) => {
   const { symbols, queryFunction } = JSON.parse(event.body);
 
