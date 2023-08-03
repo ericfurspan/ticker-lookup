@@ -2,10 +2,16 @@
   "name": "finance-metrics-api",
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "serve": "netlify functions:serve"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@netlify/functions": "^1.6.0",
     "node-fetch": "^3.3.1"
+  },
+  "devDependencies": {
+    "netlify-cli": "^15.10.0"
   }
 }
