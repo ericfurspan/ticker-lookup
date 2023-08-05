@@ -1,5 +1,4 @@
 import { google } from 'googleapis';
-import serviceAccount from '../service-account.json';
 
 const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
 const SPREADSHEET_SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -7,8 +6,8 @@ const SPREADSHEET_SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const googleAuth = async () => {
   try {
     const jwtClient = new google.auth.JWT({
-      email: serviceAccount.client_email,
-      key: serviceAccount.private_key,
+      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      key: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY,
       scopes: SPREADSHEET_SCOPES
     });
 
