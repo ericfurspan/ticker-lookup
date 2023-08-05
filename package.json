@@ -4,7 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "serve": "netlify functions:serve"
+    "serve": "netlify functions:serve",
+    "start": "ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",
