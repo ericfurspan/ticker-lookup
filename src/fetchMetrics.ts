@@ -4,7 +4,7 @@ import appendToGoogleSheet from './appendGoogleSheet';
 
 const BASE_QUERY = `https://www.alphavantage.co/query?apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
 
-const rowValues = (overviewResult: OverviewResult, globalQuoteResult: GlobalQuoteResult) => [
+const buildSheetRow = (overviewResult: OverviewResult, globalQuoteResult: GlobalQuoteResult) => [
   overviewResult.Name,
   globalQuoteResult['Global Quote']['05. price'],
   overviewResult.MarketCapitalization,
@@ -36,15 +36,14 @@ const queryAlphaVantage = async (symbol: string, queryFn: QueryFunction) => {
   }
 };
 
-const fetchMetrics = async (symbol: string, updateSheet: boolean) => {
+const fetchMetrics = async (symbol: string, updateGoogleSheet = false) => {
   const quoteResult = (await queryAlphaVantage(symbol, 'GLOBAL_QUOTE')) as GlobalQuoteResult;
   const overviewResult = (await queryAlphaVantage(symbol, 'OVERVIEW')) as OverviewResult;
 
   const data = { ...quoteResult, ...overviewResult };
 
-  if (updateSheet) {
-    const row = rowValues(overviewResult, quoteResult);
-
+  if (updateGoogleSheet) {
+    const row = buildSheetRow(overviewResult, quoteResult);
     await appendToGoogleSheet(row);
   }
 
