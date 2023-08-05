@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
 
 const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+const SPREADSHEET_RANGE = process.env.GOOGLE_SHEETS_RANGE;
 const SPREADSHEET_SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 
 const googleAuth = async () => {
@@ -30,7 +31,7 @@ const appendToGoogleSheet = async (values: string[]) => {
     return spreadsheets.values.append({
       auth: jwt,
       spreadsheetId: SPREADSHEET_ID,
-      range: `OVERVIEW!A2`,
+      range: SPREADSHEET_RANGE,
       insertDataOption: 'INSERT_ROWS',
       valueInputOption: 'USER_ENTERED',
       requestBody: {
