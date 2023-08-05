@@ -32,7 +32,7 @@ const appendToGoogleSheet = async (values: string[]) => {
       spreadsheetId: SPREADSHEET_ID,
       range: `OVERVIEW!A2`,
       insertDataOption: 'INSERT_ROWS',
-      valueInputOption: 'RAW',
+      valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [values]
       }
