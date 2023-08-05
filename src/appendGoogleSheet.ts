@@ -6,6 +6,8 @@ const SPREADSHEET_SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 
 const googleAuth = async () => {
   try {
+    console.log('starting googleAuth');
+
     const jwtClient = new google.auth.JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       key: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY,
@@ -16,19 +18,23 @@ const googleAuth = async () => {
 
     await jwtAuthPromise;
 
+    console.log('finished googleAuth');
+
     return jwtClient;
   } catch (error) {
-    console.error('Failed googleAuthentication', error);
+    console.log('failed googleAuth:', error);
   }
 };
 
 const appendToGoogleSheet = async (values: string[]) => {
   try {
+    console.log('starting appendToGoogleSheet');
+
     const jwt = await googleAuth();
 
     const { spreadsheets } = google.sheets('v4');
 
-    return spreadsheets.values.append({
+    await spreadsheets.values.append({
       auth: jwt,
       spreadsheetId: SPREADSHEET_ID,
       range: SPREADSHEET_RANGE,
@@ -38,8 +44,10 @@ const appendToGoogleSheet = async (values: string[]) => {
         values: [values]
       }
     });
+
+    console.log('finished appendToGoogleSheet');
   } catch (error) {
-    console.log('appendToGoogleSheet error:', error);
+    console.log('failed appendToGoogleSheet:', error);
   }
 };
 

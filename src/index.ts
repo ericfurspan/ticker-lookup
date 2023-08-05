@@ -1,4 +1,4 @@
-import fetchMetrics from './fetchMetrics.js';
+import processTicker from './processTicker.js';
 
 const API_RATE_LIMIT = 5;
 const REQUESTS_PER_ITEM = 2;
@@ -27,15 +27,20 @@ const tickers = [
   'HSY'
 ];
 
-async function process(tickers: string[]) {
-  for (const ticker of tickers) {
-    for (let i = 0; i < REQUESTS_PER_ITEM; i++) {
-      await fetchMetrics(ticker, true);
+async function process(symbols: string[]) {
+  console.log(`starting process for ${symbols.length} symbols`);
 
-      // pause between requests
+  for (const symbol of symbols) {
+    for (let i = 0; i < REQUESTS_PER_ITEM; i++) {
+      await processTicker(symbol, true);
+
+      console.log(`processed ${symbol}`);
+      console.log(`waiting ${TIME_BETWEEN_REQUESTS}ms`);
       await new Promise((resolve) => setTimeout(resolve, TIME_BETWEEN_REQUESTS));
     }
   }
+
+  console.log('finished process');
 }
 
 process(tickers);

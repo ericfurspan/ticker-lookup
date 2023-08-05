@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
-import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from '../types.js';
 import appendToGoogleSheet from './appendGoogleSheet.js';
+import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from '../types.js';
 
 const BASE_QUERY = `https://www.alphavantage.co/query?apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
 
@@ -22,6 +22,8 @@ const buildSheetRow = (overviewResult: OverviewResult, globalQuoteResult: Global
 
 const queryAlphaVantage = async (symbol: string, queryFn: QueryFunction) => {
   try {
+    console.log('starting queryAlphaVantage');
+
     const response = await fetch(`${BASE_QUERY}&symbol=${symbol}&function=${queryFn}`);
 
     if (response.ok) {
@@ -32,11 +34,13 @@ const queryAlphaVantage = async (symbol: string, queryFn: QueryFunction) => {
 
     throw new Error(response.statusText);
   } catch (error) {
-    console.log('queryAlphaVantage error:', error);
+    console.log('failed queryAlphaVantage:', error);
   }
 };
 
-const fetchMetrics = async (symbol: string, updateGoogleSheet = false) => {
+const processTicker = async (symbol: string, updateGoogleSheet = false) => {
+  console.log('starting processTicker');
+
   const quoteResult = (await queryAlphaVantage(symbol, 'GLOBAL_QUOTE')) as GlobalQuoteResult;
   const overviewResult = (await queryAlphaVantage(symbol, 'OVERVIEW')) as OverviewResult;
 
@@ -47,7 +51,9 @@ const fetchMetrics = async (symbol: string, updateGoogleSheet = false) => {
     await appendToGoogleSheet(row);
   }
 
+  console.log('finished processTicker');
+
   return data;
 };
 
-export default fetchMetrics;
+export default processTicker;

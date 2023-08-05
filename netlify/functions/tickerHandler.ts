@@ -1,17 +1,23 @@
 import type { Handler } from '@netlify/functions';
-import fetchMetrics from '../../src/fetchMetrics.js';
+import processTicker from '../../src/processTicker.js';
 
-const processTicker: Handler = async (event) => {
-  if (!event.body)
+const tickerHandler: Handler = async (event) => {
+  console.log('starting tickerHandler');
+
+  if (!event.body) {
+    console.log('Please provide a request body. Exiting.');
     return {
       statusCode: 500,
       body: 'Please provide a request body',
       headers: { 'Access-Control-Allow-Origin': '*' }
     };
+  }
 
   const { symbol, updateSheet } = JSON.parse(event.body);
 
-  const data = await fetchMetrics(symbol, updateSheet);
+  const data = await processTicker(symbol, updateSheet);
+
+  console.log('finished tickerHandler', data);
 
   return {
     statusCode: 200,
@@ -20,4 +26,4 @@ const processTicker: Handler = async (event) => {
   };
 };
 
-exports.handler = processTicker;
+exports.handler = tickerHandler;
