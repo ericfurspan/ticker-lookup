@@ -1,4 +1,5 @@
 import processTicker from './processTicker.js';
+import 'dotenv/config';
 
 const API_RATE_LIMIT = 5;
 const REQUESTS_PER_ITEM = 2;
@@ -35,7 +36,7 @@ async function process(symbols: string[]) {
       await processTicker(symbol, true);
 
       console.log(`processed ${symbol}`);
-      console.log(`waiting ${TIME_BETWEEN_REQUESTS}ms`);
+      console.log(`waiting ${TIME_BETWEEN_REQUESTS / 1000} seconds...`);
       await new Promise((resolve) => setTimeout(resolve, TIME_BETWEEN_REQUESTS));
     }
   }
