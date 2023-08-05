@@ -11,7 +11,7 @@ const processTicker: Handler = async (event) => {
 
   const { symbol, updateSheet } = JSON.parse(event.body);
 
-  const data = fetchMetrics(symbol, updateSheet);
+  const data = await fetchMetrics(symbol, updateSheet);
 
   return {
     statusCode: 200,
