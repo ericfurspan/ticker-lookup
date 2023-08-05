@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from '../types.js';
 import appendToGoogleSheet from './appendGoogleSheet.js';
 
