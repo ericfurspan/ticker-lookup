@@ -9,9 +9,18 @@
   "license": "ISC",
   "dependencies": {
     "@netlify/functions": "^1.6.0",
-    "node-fetch": "^3.3.1"
+    "googleapis": "^123.0.0",
+    "node-fetch": "^3.3.1",
+    "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "netlify-cli": "^15.10.0"
+    "@types/node": "^20.4.6",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "netlify-cli": "^15.10.0",
+    "prettier": "3.0.1"
   }
 }
