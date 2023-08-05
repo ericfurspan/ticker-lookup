@@ -1,9 +1,7 @@
 import processTicker from './processTicker.js';
 import 'dotenv/config';
 
-const API_RATE_LIMIT = 5;
-const REQUESTS_PER_ITEM = 2;
-const TIME_BETWEEN_REQUESTS = (60 * 1000) / API_RATE_LIMIT; // in milliseconds
+const TIME_BETWEEN_REQUESTS = 60000; // in milliseconds
 
 const tickers = [
   'AAPL',
@@ -29,19 +27,17 @@ const tickers = [
 ];
 
 async function process(symbols: string[]) {
-  console.log(`starting process for ${symbols.length} symbols`);
+  console.log(`starting to process ${symbols.length} symbols`);
 
   for (const symbol of symbols) {
-    for (let i = 0; i < REQUESTS_PER_ITEM; i++) {
-      await processTicker(symbol, true);
+    console.log('processing', symbol);
+    await processTicker(symbol, true);
 
-      console.log(`processed ${symbol}`);
-      console.log(`waiting ${TIME_BETWEEN_REQUESTS / 1000} seconds...`);
-      await new Promise((resolve) => setTimeout(resolve, TIME_BETWEEN_REQUESTS));
-    }
+    console.log(`finished ${symbol}, waiting ${TIME_BETWEEN_REQUESTS / 1000} seconds...`);
+    await new Promise((resolve) => setTimeout(resolve, TIME_BETWEEN_REQUESTS));
   }
 
-  console.log('finished process');
+  console.log('finished all symbols, exiting');
 }
 
 process(tickers);
