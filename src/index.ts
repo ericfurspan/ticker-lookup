@@ -1,7 +1,4 @@
-// TODO:
-// - process tickers with fetchMetrics on a schedule
-
-import fetchMetrics from './fetchMetrics';
+import fetchMetrics from './fetchMetrics.js';
 
 const tickers = [
   'AAPL',
@@ -26,4 +23,4 @@ const tickers = [
   'HSY'
 ];
 
-fetchMetrics(tickers[3], false);
+fetchMetrics(tickers[3], true);

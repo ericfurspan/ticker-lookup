@@ -1,5 +1,5 @@
 import type { Handler } from '@netlify/functions';
-import fetchMetrics from '../../src/fetchMetrics';
+import fetchMetrics from '../../src/fetchMetrics.js';
 
 const processTicker: Handler = async (event) => {
   if (!event.body)

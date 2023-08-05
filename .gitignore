@@ -8,3 +8,5 @@ service-account.json
 .netlify
 
 .DS_Store
+
+dist

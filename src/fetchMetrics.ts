@@ -1,6 +1,5 @@
-import fetch from 'node-fetch';
-import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from '../types';
-import appendToGoogleSheet from './appendGoogleSheet';
+import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from '../types.js';
+import appendToGoogleSheet from './appendGoogleSheet.js';
 
 const BASE_QUERY = `https://www.alphavantage.co/query?apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
 
