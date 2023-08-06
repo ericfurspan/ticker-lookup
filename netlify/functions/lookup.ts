@@ -4,7 +4,8 @@ import fetchTicker from '../../src/fetchTicker.js';
 export async function handler(event: HandlerEvent) {
   const params = event.queryStringParameters;
 
-  if (!params?.symbol) return { statusCode: 400, body: 'missing "symbol" param' };
+  if (!params?.symbol)
+    return { statusCode: 400, body: 'missing "symbol" parameter \n\n\texample: ?symbol=AAPL' };
 
   const { data, keyMetrics } = await fetchTicker(params.symbol);
 
