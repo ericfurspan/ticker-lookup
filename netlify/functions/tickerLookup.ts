@@ -1,5 +1,5 @@
 import type { Handler } from '@netlify/functions';
-import processTicker from '../../processTicker.js';
+import processTicker from '../../src/processTicker.js';
 
 const handler: Handler = async (event) => {
   if (!event.body) return { statusCode: 500, body: 'Please provide a request body' };
