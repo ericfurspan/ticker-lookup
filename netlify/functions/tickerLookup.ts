@@ -1,7 +1,7 @@
-import type { Handler } from '@netlify/functions';
+import type { HandlerEvent } from '@netlify/functions';
 import processTicker from '../../src/processTicker.js';
 
-const handler: Handler = async (event) => {
+export async function handler(event: HandlerEvent) {
   if (!event.body) return { statusCode: 500, body: 'Please provide a request body' };
 
   const args = JSON.parse(event.body);
@@ -15,6 +15,4 @@ const handler: Handler = async (event) => {
     body: JSON.stringify(data),
     headers: { 'Access-Control-Allow-Origin': '*' }
   };
-};
-
-exports.handler = handler;
+}
