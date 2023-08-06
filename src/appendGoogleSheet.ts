@@ -20,7 +20,7 @@ const googleAuth = async () => {
   }
 };
 
-const appendToGoogleSheet = async (values: string[], sheetName = 'default') => {
+const appendGoogleSheet = async (values: string[], sheetName = 'default') => {
   try {
     const jwt = await googleAuth();
 
@@ -36,8 +36,8 @@ const appendToGoogleSheet = async (values: string[], sheetName = 'default') => {
     });
   } catch (error) {
     console.error(error);
-    throw new Error('appendToGoogleSheet error');
+    throw new Error('appendGoogleSheet error');
   }
 };
 
-export default appendToGoogleSheet;
+export default appendGoogleSheet;

@@ -1,12 +1,12 @@
 import { HandlerEvent } from '@netlify/functions';
-import processTicker from '../../src/processTicker.js';
+import fetchTicker from '../../src/fetchTicker.js';
 
 export async function handler(event: HandlerEvent) {
   const params = event.queryStringParameters;
 
   if (!params?.symbol) return { statusCode: 400, body: 'missing "symbol" param' };
 
-  const { data, keyMetrics } = await processTicker({ ticker: params.symbol });
+  const { data, keyMetrics } = await fetchTicker(params.symbol);
 
   return {
     statusCode: 200,
@@ -20,7 +20,7 @@ export async function handler(event: HandlerEvent) {
         <meta charset="utf-8">
       </head>
       <body>
-        <h1>${params.symbol}</h1>
+        <h1>${params.symbol.toUpperCase()}</h1>
 
         <details>
           <summary>Key Metrics</summary>

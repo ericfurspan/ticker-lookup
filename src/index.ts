@@ -1,5 +1,6 @@
-import processTicker from './processTicker.js';
-import { BaseProcessOptions } from '../types.js';
+import fetchTicker from './fetchTicker.js';
+import { ProcessOptions } from '../types.js';
+import appendGoogleSheet from './appendGoogleSheet.js';
 
 const TIME_BETWEEN_REQUESTS = 60000; // time in ms
 
@@ -27,26 +28,26 @@ const m1Holdings = [
   'HSY'
 ];
 
-interface ProcessOptions extends BaseProcessOptions {
-  tickers: string[];
-}
-
 async function process({
   tickers,
   updateGoogleSheet = false,
   sheetName = 'default'
 }: ProcessOptions) {
-  for (const ticker of tickers) {
-    await processTicker({ ticker, updateGoogleSheet, sheetName });
+  for (const t of tickers) {
+    const { keyMetrics } = await fetchTicker(t);
 
-    console.log(`processed ${ticker}, waiting ${TIME_BETWEEN_REQUESTS / 1000} seconds...`);
+    if (updateGoogleSheet) {
+      await appendGoogleSheet(keyMetrics, sheetName);
+    }
+
+    console.log(`processed ${t}, waiting ${TIME_BETWEEN_REQUESTS / 1000} seconds...`);
 
     await new Promise((resolve) => setTimeout(resolve, TIME_BETWEEN_REQUESTS));
   }
 }
 
 export default process({
-  tickers: m1Holdings,
+  tickers: ['PLTR', 'VZ'],
   updateGoogleSheet: true,
-  sheetName: 'HOLDINGS'
+  sheetName: 'default'
 });

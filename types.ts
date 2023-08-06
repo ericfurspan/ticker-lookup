@@ -1,6 +1,7 @@
 type GoogleSheetName = 'HOLDINGS' | 'WATCHLIST' | 'default';
 
-export interface BaseProcessOptions {
+export interface ProcessOptions {
+  tickers: string[];
   updateGoogleSheet?: boolean;
   sheetName?: GoogleSheetName;
 }
@@ -8,6 +9,7 @@ export interface BaseProcessOptions {
 export type QueryFunction =
   | 'OVERVIEW'
   | 'GLOBAL_QUOTE'
+  | 'TIME_SERIES_DAILY'
   | 'INCOME_STATEMENT'
   | 'BALANCE_SHEET'
   | 'CASH_FLOW'
