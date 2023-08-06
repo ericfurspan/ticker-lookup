@@ -1,5 +1,5 @@
-import { BaseProcessOptions } from '../types.js';
 import processTicker from './processTicker.js';
+import { BaseProcessOptions } from '../types.js';
 
 const TIME_BETWEEN_REQUESTS = 60000; // time in ms
 
@@ -46,7 +46,7 @@ async function process({
 }
 
 export default process({
-  tickers: ['PLTR', 'VZ'],
+  tickers: m1Holdings,
   updateGoogleSheet: true,
-  sheetName: 'WATCHLIST'
+  sheetName: 'HOLDINGS'
 });

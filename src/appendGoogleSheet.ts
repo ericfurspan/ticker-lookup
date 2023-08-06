@@ -1,5 +1,5 @@
-import { google } from 'googleapis';
 import 'dotenv/config';
+import { google } from 'googleapis';
 
 const googleAuth = async () => {
   try {
@@ -32,9 +32,7 @@ const appendToGoogleSheet = async (values: string[], sheetName = 'default') => {
       range: `${sheetName}!A2`,
       insertDataOption: 'INSERT_ROWS',
       valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values: [values]
-      }
+      requestBody: { values: [values] }
     });
   } catch (error) {
     console.error(error);
