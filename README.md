@@ -1,4 +1,4 @@
-# Finance Metrics API
+# ticker-lookup
 
 Credits belong to to https://www.alphavantage.co/ for the underlying Stock Market API.
 
