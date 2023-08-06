@@ -1,6 +1,7 @@
 import fetchTicker from './fetchTicker.js';
 import { ProcessOptions } from '../types.js';
 import appendGoogleSheet from './appendGoogleSheet.js';
+import { compileKeyMetrics } from './utils.js';
 
 const TIME_BETWEEN_REQUESTS = 60000; // time in ms
 
@@ -34,7 +35,8 @@ async function process({
   sheetName = 'default'
 }: ProcessOptions) {
   for (const t of tickers) {
-    const { keyMetrics } = await fetchTicker(t);
+    const { overviewResult, quoteResult } = await fetchTicker(t);
+    const keyMetrics = compileKeyMetrics(overviewResult, quoteResult);
 
     if (updateGoogleSheet) {
       await appendGoogleSheet(keyMetrics, sheetName);

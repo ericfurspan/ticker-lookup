@@ -19,3 +19,35 @@ export const compileKeyMetrics = (
   overviewResult.Sector,
   new Date().toLocaleString()
 ];
+
+export const compileKeyMetricsWithNames = (
+  overviewResult: OverviewResult,
+  globalQuoteResult: GlobalQuoteResult
+) => {
+  const keyNames = [
+    'Name',
+    'Price',
+    'MarketCapitalization',
+    '52WeekLow',
+    '52WeekHigh',
+    'PERatio',
+    'TrailingPE',
+    'ForwardPE',
+    'PEGRatio',
+    'EPS',
+    'DividendYield',
+    'AnalystTargetPrice',
+    'Sector'
+  ];
+
+  return keyNames.reduce((acc, curr) => {
+    if (curr === 'Price') {
+      // @ts-expect-error - property exists on GlobalQuoteResult['Global Quote']
+      acc[curr] = globalQuoteResult['Global Quote']?.['05. price'];
+
+      return acc;
+    }
+
+    return { ...acc, [curr]: overviewResult[curr as keyof OverviewResult] };
+  }, {});
+};

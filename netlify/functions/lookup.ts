@@ -1,5 +1,6 @@
 import { HandlerEvent } from '@netlify/functions';
 import fetchTicker from '../../src/fetchTicker.js';
+import { compileKeyMetricsWithNames } from '../../src/utils.js';
 
 export async function handler(event: HandlerEvent) {
   const params = event.queryStringParameters;
@@ -7,7 +8,10 @@ export async function handler(event: HandlerEvent) {
   if (!params?.symbol)
     return { statusCode: 400, body: 'missing "symbol" parameter \n\n\texample: ?symbol=AAPL' };
 
-  const { data, keyMetrics } = await fetchTicker(params.symbol);
+  const { overviewResult, quoteResult } = await fetchTicker(params.symbol);
+
+  const keyMetrics = compileKeyMetricsWithNames(overviewResult, quoteResult);
+  const rawData = { ...overviewResult, ...quoteResult };
 
   return {
     statusCode: 200,
@@ -30,7 +34,7 @@ export async function handler(event: HandlerEvent) {
         
         <details>
           <summary>Raw Data</summary>
-          <pre>${JSON.stringify(data, null, 4)}</pre>
+          <pre>${JSON.stringify(rawData, null, 4)}</pre>
         </details>
       </body>
     </html>`

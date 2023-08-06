@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import fetch from 'node-fetch';
 import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from '../types.js';
-import { compileKeyMetrics } from './utils.js';
 
 const BASE_QUERY = `https://www.alphavantage.co/query?apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
 
@@ -23,11 +22,7 @@ async function fetchTicker(ticker: string) {
   const quoteResult = (await queryAlphaVantage(ticker, 'GLOBAL_QUOTE')) as GlobalQuoteResult;
   const overviewResult = (await queryAlphaVantage(ticker, 'OVERVIEW')) as OverviewResult;
 
-  const data = { ...quoteResult, ...overviewResult };
-
-  const keyMetrics = compileKeyMetrics(overviewResult, quoteResult);
-
-  return { data, keyMetrics };
+  return { quoteResult, overviewResult };
 }
 
 export default fetchTicker;
