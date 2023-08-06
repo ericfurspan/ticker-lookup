@@ -25,7 +25,7 @@ const buildSheetRow = (overviewResult: OverviewResult, globalQuoteResult: Global
   overviewResult.DividendYield,
   overviewResult.AnalystTargetPrice,
   overviewResult.Sector,
-  new Date().toISOString()
+  new Date().toLocaleString()
 ];
 
 const queryAlphaVantage = async (symbol: string, queryFn: QueryFunction) => {
