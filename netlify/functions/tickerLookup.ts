@@ -17,4 +17,4 @@ const handler: Handler = async (event) => {
   };
 };
 
-module.exports = handler;
+exports.handler = handler;
