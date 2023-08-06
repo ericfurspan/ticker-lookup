@@ -1,7 +1,8 @@
-export interface EventBody {
-  symbols: string[];
-  queryFunction: QueryFunction;
-  updateSheet: boolean;
+type GoogleSheetName = 'HOLDINGS' | 'WATCHLIST' | 'default';
+
+export interface BaseProcessOptions {
+  updateGoogleSheet?: boolean;
+  sheetName?: GoogleSheetName;
 }
 
 export type QueryFunction =

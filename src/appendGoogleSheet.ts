@@ -20,7 +20,7 @@ const googleAuth = async () => {
   }
 };
 
-const appendToGoogleSheet = async (values: string[]) => {
+const appendToGoogleSheet = async (values: string[], sheetName = 'default') => {
   try {
     const jwt = await googleAuth();
 
@@ -29,7 +29,7 @@ const appendToGoogleSheet = async (values: string[]) => {
     await spreadsheets.values.append({
       auth: jwt,
       spreadsheetId: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
-      range: process.env.GOOGLE_SHEETS_RANGE,
+      range: `${sheetName}!A2`,
       insertDataOption: 'INSERT_ROWS',
       valueInputOption: 'USER_ENTERED',
       requestBody: {
@@ -37,7 +37,7 @@ const appendToGoogleSheet = async (values: string[]) => {
       }
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error('appendToGoogleSheet error');
   }
 };
