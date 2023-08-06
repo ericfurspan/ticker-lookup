@@ -52,12 +52,13 @@ const processTicker = async ({ ticker, updateGoogleSheet = false, sheetName }: P
 
   const data = { ...quoteResult, ...overviewResult };
 
+  const keyMetrics = buildSheetRow(overviewResult, quoteResult);
+
   if (updateGoogleSheet) {
-    const row = buildSheetRow(overviewResult, quoteResult);
-    await appendToGoogleSheet(row, sheetName);
+    await appendToGoogleSheet(keyMetrics, sheetName);
   }
 
-  return data;
+  return { data, keyMetrics };
 };
 
 export default processTicker;
