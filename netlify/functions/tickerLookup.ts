@@ -1,7 +1,7 @@
 import type { Handler } from '@netlify/functions';
 import processTicker from '../../src/processTicker.js';
 
-const tickerHandler: Handler = async (event) => {
+const tickerLookup: Handler = async (event) => {
   if (!event.body) return { statusCode: 500, body: 'Please provide a request body' };
 
   const data = await processTicker(JSON.parse(event.body));
@@ -13,4 +13,4 @@ const tickerHandler: Handler = async (event) => {
   };
 };
 
-exports.handler = tickerHandler;
+exports.handler = tickerLookup;
