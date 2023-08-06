@@ -1,9 +1,8 @@
 import { google } from 'googleapis';
+import 'dotenv/config';
 
 const googleAuth = async () => {
   try {
-    console.log('starting googleAuth');
-
     const jwtClient = new google.auth.JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       key: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY,
@@ -14,18 +13,15 @@ const googleAuth = async () => {
 
     await jwtAuthPromise;
 
-    console.log('finished googleAuth');
-
     return jwtClient;
   } catch (error) {
-    console.log('failed googleAuth:', error);
+    console.log(error);
+    throw new Error('googleAuth error');
   }
 };
 
 const appendToGoogleSheet = async (values: string[]) => {
   try {
-    console.log('starting appendToGoogleSheet');
-
     const jwt = await googleAuth();
 
     const { spreadsheets } = google.sheets('v4');
@@ -40,10 +36,9 @@ const appendToGoogleSheet = async (values: string[]) => {
         values: [values]
       }
     });
-
-    console.log('finished appendToGoogleSheet');
   } catch (error) {
-    console.log('failed appendToGoogleSheet:', error);
+    console.log(error);
+    throw new Error('appendToGoogleSheet error');
   }
 };
 

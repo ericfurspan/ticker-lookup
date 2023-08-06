@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import 'dotenv/config';
 import appendToGoogleSheet from './appendGoogleSheet.js';
 import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from '../types.js';
 
@@ -6,7 +7,7 @@ const BASE_QUERY = `https://www.alphavantage.co/query?apikey=${process.env.ALPHA
 
 const buildSheetRow = (overviewResult: OverviewResult, globalQuoteResult: GlobalQuoteResult) => [
   overviewResult.Name,
-  globalQuoteResult['Global Quote']['05. price'],
+  globalQuoteResult['Global Quote']?.['05. price'],
   overviewResult.MarketCapitalization,
   overviewResult['52WeekLow'],
   overviewResult['52WeekHigh'],
@@ -21,26 +22,20 @@ const buildSheetRow = (overviewResult: OverviewResult, globalQuoteResult: Global
 ];
 
 const queryAlphaVantage = async (symbol: string, queryFn: QueryFunction) => {
-  try {
-    console.log('starting queryAlphaVantage');
+  const query = `${BASE_QUERY}&symbol=${symbol}&function=${queryFn}`;
+  const response = await fetch(query);
 
-    const response = await fetch(`${BASE_QUERY}&symbol=${symbol}&function=${queryFn}`);
+  if (response.ok) {
+    const data = await response.json();
 
-    if (response.ok) {
-      const data = await response.json();
-
-      return data as QueryResult;
-    }
-
-    throw new Error(response.statusText);
-  } catch (error) {
-    console.log('failed queryAlphaVantage:', error);
+    return data as QueryResult;
   }
+
+  console.log(`${response.status} - ${response.statusText}`, query);
+  throw new Error(`queryAlphaVantage error`);
 };
 
 const processTicker = async (symbol: string, updateGoogleSheet = false) => {
-  console.log('starting processTicker');
-
   const quoteResult = (await queryAlphaVantage(symbol, 'GLOBAL_QUOTE')) as GlobalQuoteResult;
   const overviewResult = (await queryAlphaVantage(symbol, 'OVERVIEW')) as OverviewResult;
 
@@ -50,8 +45,6 @@ const processTicker = async (symbol: string, updateGoogleSheet = false) => {
     const row = buildSheetRow(overviewResult, quoteResult);
     await appendToGoogleSheet(row);
   }
-
-  console.log('finished processTicker');
 
   return data;
 };
