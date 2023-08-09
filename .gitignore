@@ -10,3 +10,5 @@ service-account.json
 .DS_Store
 
 dist
+
+notes.md
