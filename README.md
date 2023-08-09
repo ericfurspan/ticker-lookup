@@ -1,9 +1,9 @@
 # ticker-lookup
 
-Credits belong to to https://www.alphavantage.co/ for the underlying Stock Market API.
+ A nodejs/typescript wrapper around select AlphaVantage endpoints to enable rapid access to key financial metrics for any stock. 
 
-## Documentation
-
-- https://www.alphavantage.co/documentation #company-overview
-- https://github.com/googleapis/google-api-nodejs-client/blob/main/samples/sheets/append.js
+## Resources
+- https://www.alphavantage.co/documentation/
 - https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values
+- https://github.com/googleapis/google-api-nodejs-client/blob/main/samples/sheets/append.js
+- https://docs.netlify.com/functions/overview/
