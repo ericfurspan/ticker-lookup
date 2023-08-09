@@ -12,6 +12,7 @@ export async function handler(event: HandlerEvent) {
 
   const keyMetrics = compileKeyMetricsWithNames(overviewResult, quoteResult);
   const rawData = { ...overviewResult, ...quoteResult };
+  const lastUpdated = new Date(keyMetrics['Quote Date']).toLocaleString();
 
   return {
     statusCode: 200,
@@ -24,8 +25,10 @@ export async function handler(event: HandlerEvent) {
       <head>
         <meta charset="utf-8">
       </head>
-      <body>
-        <h1>${params.symbol.toUpperCase()}</h1>
+      <body style="font-size: larger">
+        <h1>${rawData.Name} (${params.symbol.toUpperCase()})</h1>
+
+        <p>Last updated: ${lastUpdated}</p>
 
         <details>
           <summary>Key Metrics</summary>

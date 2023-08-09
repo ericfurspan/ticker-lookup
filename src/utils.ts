@@ -1,4 +1,4 @@
-import { GlobalQuoteResult, OverviewResult } from '../types.js';
+import { GlobalQuoteResult, OverviewResult } from './types.js';
 
 export const compileKeyMetrics = (
   overviewResult: OverviewResult,
@@ -24,30 +24,20 @@ export const compileKeyMetricsWithNames = (
   overviewResult: OverviewResult,
   globalQuoteResult: GlobalQuoteResult
 ) => {
-  const keyNames = [
-    'Name',
-    'Price',
-    'MarketCapitalization',
-    '52WeekLow',
-    '52WeekHigh',
-    'PERatio',
-    'TrailingPE',
-    'ForwardPE',
-    'PEGRatio',
-    'EPS',
-    'DividendYield',
-    'AnalystTargetPrice',
-    'Sector'
-  ];
-
-  return keyNames.reduce((acc, curr) => {
-    if (curr === 'Price') {
-      // @ts-expect-error - property exists on GlobalQuoteResult['Global Quote']
-      acc[curr] = globalQuoteResult['Global Quote']?.['05. price'];
-
-      return acc;
-    }
-
-    return { ...acc, [curr]: overviewResult[curr as keyof OverviewResult] };
-  }, {});
+  return {
+    Name: overviewResult.Name,
+    Sector: overviewResult.Sector,
+    'Quote Date': new Date().toLocaleString(),
+    'Quote Price': globalQuoteResult['Global Quote']?.['05. price'],
+    'Market Cap': overviewResult.MarketCapitalization,
+    '52 Week Low': overviewResult['52WeekLow'],
+    '52 Week High': overviewResult['52WeekHigh'],
+    'PE Ratio': overviewResult.PERatio,
+    'Trailing PE': overviewResult.TrailingPE,
+    'Forward PE': overviewResult.ForwardPE,
+    'PE Growth Ratio': overviewResult.PEGRatio,
+    'Earnings Per Share': overviewResult.EPS,
+    'Dividend Yield': overviewResult.DividendYield,
+    'Analyst Target Price': overviewResult.AnalystTargetPrice
+  };
 };
