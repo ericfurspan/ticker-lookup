@@ -1,5 +1,5 @@
 import fetchTicker from './fetchTicker.js';
-import { ProcessOptions } from '../types.js';
+import { ProcessOptions } from './types.js';
 import appendGoogleSheet from './appendGoogleSheet.js';
 import { compileKeyMetrics } from './utils.js';
 

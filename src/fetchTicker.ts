@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import fetch from 'node-fetch';
-import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from '../types.js';
+import { GlobalQuoteResult, OverviewResult, QueryFunction, QueryResult } from './types.js';
 
 const BASE_QUERY = `https://www.alphavantage.co/query?apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
 
