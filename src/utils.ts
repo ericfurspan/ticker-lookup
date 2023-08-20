@@ -1,3 +1,4 @@
+import { FetchError } from 'node-fetch';
 import { GlobalQuoteResult, OverviewResult } from './types.js';
 
 const formatCurrency = (value: string) => {
@@ -58,4 +59,15 @@ export const compileKeyMetricsWithNames = (
     'Dividend Yield': formatPercent(overviewResult.DividendYield),
     'Analyst Target Price': formatCurrency(overviewResult.AnalystTargetPrice)
   };
+};
+
+export const parseFetchError = (error: FetchError) => {
+  const apiKeyIndex = error.message.indexOf('apikey');
+  const afterApiKey = error.message.substring(apiKeyIndex);
+  const nextAmpersandIndex = afterApiKey.indexOf('&');
+
+  const message =
+    error.message.substring(0, apiKeyIndex) + afterApiKey.substring(nextAmpersandIndex);
+
+  return message;
 };
