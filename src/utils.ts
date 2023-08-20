@@ -1,5 +1,23 @@
 import { GlobalQuoteResult, OverviewResult } from './types.js';
 
+const formatCurrency = (value: string) => {
+  const numericValue = parseFloat(value);
+
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(numericValue);
+};
+
+const formatPercent = (value: string) => {
+  const numericValue = parseFloat(value);
+
+  return new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumSignificantDigits: 3
+  }).format(numericValue);
+};
+
 export const compileKeyMetrics = (
   overviewResult: OverviewResult,
   globalQuoteResult: GlobalQuoteResult
@@ -28,16 +46,16 @@ export const compileKeyMetricsWithNames = (
     Name: overviewResult.Name,
     Sector: overviewResult.Sector,
     'Quote Date': new Date().toLocaleString(),
-    'Quote Price': globalQuoteResult['Global Quote']?.['05. price'],
-    'Market Cap': overviewResult.MarketCapitalization,
-    '52 Week Low': overviewResult['52WeekLow'],
-    '52 Week High': overviewResult['52WeekHigh'],
+    'Quote Price': formatCurrency(globalQuoteResult['Global Quote']?.['05. price']),
+    'Market Cap': formatCurrency(overviewResult.MarketCapitalization),
+    '52 Week Low': formatCurrency(overviewResult['52WeekLow']),
+    '52 Week High': formatCurrency(overviewResult['52WeekHigh']),
     'PE Ratio': overviewResult.PERatio,
     'Trailing PE': overviewResult.TrailingPE,
     'Forward PE': overviewResult.ForwardPE,
     'PE Growth Ratio': overviewResult.PEGRatio,
-    'Earnings Per Share': overviewResult.EPS,
-    'Dividend Yield': overviewResult.DividendYield,
-    'Analyst Target Price': overviewResult.AnalystTargetPrice
+    'Earnings Per Share': formatCurrency(overviewResult.EPS),
+    'Dividend Yield': formatPercent(overviewResult.DividendYield),
+    'Analyst Target Price': formatCurrency(overviewResult.AnalystTargetPrice)
   };
 };
