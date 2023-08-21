@@ -24,6 +24,9 @@ export default async function fetchTicker(ticker: string) {
       return { error: overviewResult[k as keyof typeof overviewResult] } as FetchTickerError;
   }
 
+  if (!('Symbol' in overviewResult))
+    return { error: `Failed to query the Alpha Vantage API.\n\nTicker "${ticker}" not found.` };
+
   return { quoteResult, overviewResult } as FetchTickerResult;
 }
 
@@ -37,7 +40,7 @@ async function queryAlphaVantage(ticker: string, queryFn: QueryFunction) {
     return data as QueryResult | AlphaVantageError;
   } catch (error) {
     if (error instanceof FetchError) {
-      throw `Failed to query the Alpha Vantage API.\n\nMessage: ${parseFetchError(error)}`;
+      throw `Failed to query the Alpha Vantage API.\n\nMessage: ${parseFetchError(error)}.`;
     } else {
       throw 'An unexpected error occurred, please try again later.';
     }
