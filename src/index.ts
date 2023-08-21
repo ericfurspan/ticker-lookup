@@ -35,7 +35,12 @@ async function process({
   sheetName = 'default'
 }: ProcessOptions) {
   for (const t of tickers) {
-    const { overviewResult, quoteResult } = await fetchTicker(t);
+    const response = await fetchTicker(t);
+
+    if ('error' in response) throw response.error;
+
+    const { quoteResult, overviewResult } = response;
+
     const keyMetrics = compileKeyMetrics(overviewResult, quoteResult);
 
     if (updateGoogleSheet) {
