@@ -42,24 +42,23 @@ export const compileKeyMetrics = (
 export const compileKeyMetricsWithNames = (
   overviewResult: OverviewResult,
   globalQuoteResult: GlobalQuoteResult
-) => {
-  return {
-    Name: overviewResult.Name,
-    Sector: overviewResult.Sector,
-    'Quote Date': new Date().toLocaleString(),
-    'Quote Price': formatCurrency(globalQuoteResult['Global Quote']?.['05. price']),
-    'Market Cap': formatCurrency(overviewResult.MarketCapitalization),
-    '52 Week Low': formatCurrency(overviewResult['52WeekLow']),
-    '52 Week High': formatCurrency(overviewResult['52WeekHigh']),
-    'PE Ratio': overviewResult.PERatio,
-    'Trailing PE': overviewResult.TrailingPE,
-    'Forward PE': overviewResult.ForwardPE,
-    'PE Growth Ratio': overviewResult.PEGRatio,
-    'Earnings Per Share': formatCurrency(overviewResult.EPS),
-    'Dividend Yield': formatPercent(overviewResult.DividendYield),
-    'Analyst Target Price': formatCurrency(overviewResult.AnalystTargetPrice)
-  };
-};
+) => ({
+  Name: overviewResult.Name,
+  Sector: overviewResult.Sector,
+  'Quote Date': new Date().toLocaleString(),
+  'Quote Price': formatCurrency(globalQuoteResult['Global Quote']?.['05. price']),
+  'Market Cap': formatCurrency(overviewResult.MarketCapitalization),
+  '52 Week Low': formatCurrency(overviewResult['52WeekLow']),
+  '52 Week High': formatCurrency(overviewResult['52WeekHigh']),
+  'PE Ratio': overviewResult.PERatio,
+  'Trailing PE': overviewResult.TrailingPE,
+  'Forward PE': overviewResult.ForwardPE,
+  'PE Growth Ratio': overviewResult.PEGRatio,
+  'Earnings Per Share': formatCurrency(overviewResult.EPS),
+  'Profit Margin': formatCurrency(overviewResult.ProfitMargin),
+  'Dividend Yield': formatPercent(overviewResult.DividendYield),
+  'Analyst Target Price': formatCurrency(overviewResult.AnalystTargetPrice)
+});
 
 export const parseFetchError = (error: FetchError) => {
   const apiKeyIndex = error.message.indexOf('apikey');
